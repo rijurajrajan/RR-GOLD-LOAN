@@ -28,13 +28,8 @@ function toggleSidebar() {
   }
 })();
 
-
-
-
 /**
  * Shows a toast notification message.
- * @param {string} message The message to display.
- * @param {string} type The type of toast ('success', 'error', 'info').
  */
 function showToast(message, type = 'success') {
   const container = document.getElementById('toastContainer');
@@ -124,7 +119,7 @@ if (document.getElementById('enquiryForm')) {
   enquiryForm.addEventListener('submit', function(e) {
     e.preventDefault();
     showToast('Enquiry submitted successfully!', 'success');
-    enquiryForm.reset(); // Clear the form fields
+    enquiryForm.reset();
   });
 }
 
@@ -177,9 +172,6 @@ function resetSliderInterval() {
   startAutoSlider();
 }
 
-/**
- * Initializes the image slider functionality.
- */
 (function() {
   const sliderContainer = document.querySelector('.slider-container');
   if (!sliderContainer) return;
@@ -195,12 +187,12 @@ function resetSliderInterval() {
     dot.addEventListener('click', () => currentSlide(index + 1));
   });
 
-  showSlides(slideIndex); // Show the initial slide
-  startAutoSlider(); // Start the automatic sliding
+  showSlides(slideIndex);
+  startAutoSlider();
 })();
 
 /**
- * Handles the interactive FAQ section on the loans page.
+ * Handles the interactive FAQ section.
  */
 (function() {
   const faqQuestions = document.querySelectorAll('.faq-question');
@@ -221,17 +213,13 @@ function resetSliderInterval() {
 })();
 
 /**
- * Handles the "Back to Top" button functionality.
+ * Back to Top button functionality.
  */
 (function() {
   const backToTopBtn = document.getElementById('backToTopBtn');
   if (!backToTopBtn) return;
 
-  // The main scrollable container is `.main` on most pages.
-  // On the login page (`index.html`), it's the `window`.
   const scrollableContainer = document.querySelector('.main') || window;
-  
-  // The element to check `scrollTop` on is different for `window`.
   const scrollPositionSource = document.querySelector('.main') || document.documentElement;
 
   const handleScroll = () => {
@@ -243,7 +231,6 @@ function resetSliderInterval() {
   };
 
   const scrollToTop = () => {
-    // `scrollTo` is a method on both `window` and DOM elements.
     scrollableContainer.scrollTo({
       top: 0,
       behavior: 'smooth'
@@ -255,7 +242,7 @@ function resetSliderInterval() {
 })();
 
 /**
- * Handles the video modal functionality on the media page.
+ * Video modal functionality.
  */
 function initVideoModal() {
   const videoCards = document.querySelectorAll('.video-card');
@@ -280,7 +267,6 @@ function initVideoModal() {
   const closeModal = () => {
     modal.classList.remove('show');
     document.body.classList.remove('modal-open');
-    // Stop the video by removing the iframe
     videoPlayerContainer.innerHTML = '';
   };
 
@@ -295,19 +281,16 @@ function initVideoModal() {
 
   closeModalBtn.addEventListener('click', closeModal);
   modal.addEventListener('click', (e) => {
-    if (e.target === modal) { // Close if clicking on the overlay itself
-      closeModal();
-    }
+    if (e.target === modal) closeModal();
   });
 }
 
-// Initialize video modal if on the media page
 if (document.querySelector('.media-page')) {
   initVideoModal();
 }
 
 /**
- * Handles filtering and "Load More" functionality for the news page.
+ * News page filter + load more.
  */
 function initNewsPage() {
   const searchInput = document.getElementById('newsSearchInput');
@@ -315,7 +298,7 @@ function initNewsPage() {
   const noResultsMessage = document.getElementById('noNewsResults');
   const loadMoreBtn = document.getElementById('loadMoreBtn');
   const loadMoreContainer = document.getElementById('loadMoreContainer');
-  const itemsPerLoad = 3; // Number of items to show per "load more" click
+  const itemsPerLoad = 3;
   let currentlyVisibleCount = 0;
   let filteredArticles = [];
 
@@ -326,7 +309,6 @@ function initNewsPage() {
     nextItemsToShow.forEach(article => article.style.display = 'flex');
     currentlyVisibleCount += nextItemsToShow.length;
 
-    // Hide "Load More" button if all items are visible
     if (currentlyVisibleCount >= filteredArticles.length) {
       loadMoreContainer.style.display = 'none';
     } else {
@@ -342,7 +324,6 @@ function initNewsPage() {
       return title.includes(searchTerm);
     });
 
-    // Hide all articles initially
     allArticles.forEach(article => article.style.display = 'none');
     currentlyVisibleCount = 0;
 
@@ -351,7 +332,7 @@ function initNewsPage() {
     }
     
     if (loadMoreContainer) {
-        loadMoreContainer.style.display = filteredArticles.length > 0 ? 'block' : 'none';
+      loadMoreContainer.style.display = filteredArticles.length > 0 ? 'block' : 'none';
     }
 
     displayMoreItems();
@@ -363,17 +344,15 @@ function initNewsPage() {
     searchInput.addEventListener('input', handleUpdate);
   }
 
-  // Initial load
   handleUpdate();
 }
 
-// Initialize news page functionality (filter + load more)
 if (document.querySelector('.news-page')) {
   initNewsPage();
 }
 
 /**
- * Handles the EMI Calculator widget on the loans page.
+ * EMI Calculator.
  */
 function initEmiCalculator() {
   const calculateBtn = document.getElementById('calculateEmiBtn');
@@ -388,15 +367,14 @@ function initEmiCalculator() {
   calculateBtn.addEventListener('click', () => {
     const p = parseFloat(loanAmountInput.value);
     const annualRate = parseFloat(interestRateInput.value);
-    const n = parseFloat(loanTenureInput.value); // Tenure in months
+    const n = parseFloat(loanTenureInput.value);
 
     if (isNaN(p) || isNaN(annualRate) || isNaN(n) || p <= 0 || annualRate <= 0 || n <= 0) {
       showToast('Please enter valid positive numbers for all fields.', 'error');
       return;
     }
 
-    const r = annualRate / 12 / 100; // Monthly interest rate
-
+    const r = annualRate / 12 / 100;
     const emi = (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
 
     if (isFinite(emi)) {
@@ -409,13 +387,12 @@ function initEmiCalculator() {
   });
 }
 
-// Initialize EMI Calculator if it exists on the page
 if (document.querySelector('.emi-calculator-card')) {
   initEmiCalculator();
 }
 
 /**
- * Handles filtering job listings on the careers page.
+ * Careers filter.
  */
 function initCareersFilter() {
   const searchInput = document.getElementById('jobSearchInput');
@@ -433,12 +410,8 @@ function initCareersFilter() {
       const location = card.querySelector('.job-location').textContent.toLowerCase();
       const isVisible = title.includes(searchTerm) || location.includes(searchTerm);
 
-      // The job-card is a block element by default
       card.style.display = isVisible ? 'block' : 'none';
-
-      if (isVisible) {
-        visibleCount++;
-      }
+      if (isVisible) visibleCount++;
     });
 
     if (noResultsMessage) {
@@ -447,13 +420,12 @@ function initCareersFilter() {
   });
 }
 
-// Initialize careers filter if on the careers page
 if (document.querySelector('.careers-page')) {
   initCareersFilter();
 }
 
 /**
- * Handles the contact form submission.
+ * Contact form.
  */
 if (document.getElementById('contactForm')) {
   const contactForm = document.getElementById('contactForm');
@@ -462,27 +434,25 @@ if (document.getElementById('contactForm')) {
   contactForm.addEventListener('submit', function(e) {
     e.preventDefault();
 
-    // Email validation
     const email = emailInput.value;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       showToast('Please enter a valid email address.', 'error');
-      return; // Stop submission if email is invalid
+      return;
     }
 
     showToast('Your message has been sent successfully!', 'success');
-    contactForm.reset(); // Clear the form fields
+    contactForm.reset();
   });
 }
 
 /**
- * Initializes the dashboard chart.
+ * Dashboard chart.
  */
 function initDashboardChart(isDarkMode) {
   const ctx = document.getElementById('loanChart');
   if (!ctx) return;
 
-  // Destroy existing chart if it exists
   if (dashboardChart) {
     dashboardChart.destroy();
   }
@@ -525,37 +495,27 @@ function initDashboardChart(isDarkMode) {
         }
       },
       plugins: {
-        legend: {
-          display: true // Show legend to distinguish datasets
-        }
+        legend: { display: true }
       }
     }
   });
 }
 
-// Initialize Dashboard Chart if it exists
-// The chart is now initialized by the dark mode toggle logic
-// to ensure the correct theme is applied on load.
-
 /**
- * Handles the print button on the loans page.
+ * Print button.
  */
 function initPrintButton() {
   const printBtn = document.getElementById('printLoanDetailsBtn');
   if (!printBtn) return;
-
-  printBtn.addEventListener('click', () => {
-    window.print();
-  });
+  printBtn.addEventListener('click', () => window.print());
 }
 
-// Initialize Print Button if it exists
 if (document.getElementById('printLoanDetailsBtn')) {
   initPrintButton();
 }
 
 /**
- * Handles opening news articles in a modal.
+ * News modal.
  */
 function initNewsModal() {
   const newsLinks = document.querySelectorAll('.news-link');
@@ -571,8 +531,6 @@ function initNewsModal() {
     const meta = articleCard.querySelector('.news-meta').innerHTML;
     const summary = articleCard.querySelector('.news-summary').innerHTML;
 
-    // For a real app, you'd load the full article content here, maybe via AJAX.
-    // For this demo, we'll just use the summary as the main content.
     modalBody.innerHTML = `
       <img src="${imageSrc}" alt="${title}">
       <h2>${title}</h2>
@@ -604,47 +562,12 @@ function initNewsModal() {
   });
 }
 
-// Initialize news modal if on the news page
 if (document.querySelector('.news-page')) {
   initNewsModal();
 }
 
 /**
- * Handles the dark mode toggle functionality.
+ * Dark mode toggle.
  */
 function initDarkModeToggle() {
-  const darkModeToggle = document.getElementById('darkModeToggle');
-  if (!darkModeToggle) return;
-
-  const body = document.body;
-
-  // Apply saved theme on page load
-  if (localStorage.getItem('theme') === 'dark') {
-    body.classList.add('dark-mode');
-    darkModeToggle.checked = true;
-  }
-
-  // Initialize chart with correct theme
-  if (document.getElementById('loanChart')) {
-    initDashboardChart(body.classList.contains('dark-mode'));
-  }
-
-  darkModeToggle.addEventListener('change', () => {
-    body.classList.toggle('dark-mode');
-
-    // Save theme preference
-    if (body.classList.contains('dark-mode')) {
-      localStorage.setItem('theme', 'dark');
-    } else {
-      localStorage.setItem('theme', 'light');
-    }
-
-    // Re-initialize chart with new theme
-    if (document.getElementById('loanChart')) {
-      initDashboardChart(body.classList.contains('dark-mode'));
-    }
-  });
-}
-
-// Initialize Dark Mode Toggle
-initDarkModeToggle();
+  const darkModeToggle = document.getElementById('darkModeToggle
