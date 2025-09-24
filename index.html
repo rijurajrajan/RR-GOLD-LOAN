@@ -10,8 +10,8 @@
 </head>
 <body class="dashboard-page-bg">
 
-  <header id="top-nav" class="top-nav">
-    <a href="dashboard.html" class="nav-brand">RR gold loan</a>
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar">
     <nav>
       <a href="dashboard.html" class="active"><i class="fa fa-home"></i><span class="text">Home</span></a>
       <a href="loans.html"><i class="fas fa-hand-holding-dollar"></i><span class="text">Loans</span></a>
@@ -22,21 +22,71 @@
       <a href="about.html"><i class="fa fa-users"></i><span class="text">About</span></a>
       <a href="contact.html"><i class="fa fa-envelope"></i><span class="text">Contact</span></a>
     </nav>
-    <div class="mobile-toggle">☰</div>
-  </header>
+    <div class="footer">
+      <a href="tel:+911234567890"><i class="fa fa-phone"></i><span class="text">Call Us</span></a>
+      <a href="index.html"><i class="fas fa-right-from-bracket"></i><span class="text">Logout</span></a>
+      <div class="dark-mode-toggle">
+        <i class="fas fa-moon"></i>
+        <label class="switch">
+          <input type="checkbox" id="darkModeToggle">
+          <span class="slider round"></span>
+        </label>
+        <i class="fas fa-sun"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toggle Button -->
+  <div class="toggle-btn">☰</div>
+
+  <!-- Main Content Overlay for mobile -->
+  <div id="mainOverlay" class="main-overlay"></div>
 
   <!-- Main Content -->
   <div class="main">
     <!-- Image Slider -->
+    <div class="slider-container">
+      <div class="slides">
+        <div class="slide">
+          <img src="https://images.unsplash.com/photo-1621901132926-700920336a5e?q=80&w=1374&auto=format&fit=crop" alt="A collection of gold coins representing valuable assets">
+        </div>
+        <div class="slide">
+          <img src="https://images.unsplash.com/photo-1554224155-1696413565d3?q=80&w=1470&auto=format&fit=crop" alt="A person signing financial documents for a loan">
+        </div>
+        <div class="slide">
+          <img src="https://images.unsplash.com/photo-1631603090989-e4525856a52b?q=80&w=1470&auto=format&fit=crop" alt="A secure safe deposit box symbolizing asset protection">
+        </div>
+        <div class="slide">
+          <img src="https://images.unsplash.com/photo-1579621970795-87facc2f976d?q=80&w=1470&auto=format&fit=crop" alt="Hands exchanging money, representing financial transactions">
+        </div>
+        <div class="slide">
+          <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1470&auto=format&fit=crop" alt="A team discussing plans, representing customer support and planning">
+        </div>
+      </div>
+      <button class="slider-btn prev-btn">❮</button>
+      <button class="slider-btn next-btn">❯</button>
+      <div class="dots">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
 
- 
+    <!-- Data Chart -->
+    <div class="chart-container">
+      <h2>Loan Application Trends</h2>
+      <canvas id="loanChart"></canvas>
+    </div>
+
     <!-- Enquiry Form -->
     <div class="enquiry-form">
       <h2>Enquiry Form</h2>
       <form id="enquiryForm">
         <input type="text" name="name" placeholder="Name" required>
         <input type="email" name="email" placeholder="Email" required>
-        <input type="tel" name="mobile" placeholder="Mobile No." required>
+        <input type="tel" name="mobile" placeholder="Mobile No" required>
         <input type="number" name="loan_amount" placeholder="Loan Amount (₹)" required>
         <select name="loan_type" required>
           <option value="" disabled selected>Select Loan Type</option>
@@ -46,10 +96,20 @@
           <option value="mudra">Mudra Loan</option>
           <option value="general">General Enquiry</option>
         </select>
-        <button type="submit">Apply Now</button>
+        <button type="submit">Submit</button>
       </form>
     </div>
 
+    <!-- Quick Loan Section -->
+    <div class="quick-loan">
+      <div class="quick-loan-options">
+        <a href="loans.html" class="option">Loan Information</a>
+        <a href="loans.html#loan-benefits" class="option">Loan Benefits</a>
+        <a href="loans.html#quick-highlights" class="option">Quick Highlights</a>
+        <a href="loans.html#emi-calculator" class="option">EMI Calculator</a>
+        <a href="loans.html#faq" class="option">FAQs</a>
+      </div>
+    </div>
   </div>
 
   <!-- Toast Notification Container -->
@@ -58,7 +118,9 @@
   <!-- Back to Top Button -->
   <button id="backToTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="js/script.js"></script>
 
 </body>
 </html>
+
